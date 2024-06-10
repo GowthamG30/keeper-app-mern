@@ -9,6 +9,7 @@ mongoose.connect(process.env.MONGO_URI, {
 const postSchema = new mongoose.Schema({
 	title: String,
 	content: String,
+	noteStatus: String,
 });
 
 const Post = mongoose.model("Post", postSchema);

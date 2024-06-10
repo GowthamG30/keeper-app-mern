@@ -35,25 +35,18 @@ app.post("/api/add", (req, res) => {
 		content: req.body.content,
 		noteStatus: req.body.noteStatus,
 	});
-	data.save((save_err) => {
-		if(save_err) {
-			console.log(save_err);
-			res.status(500).send("Internal Server Error");
-		}
-		else {
-			res.json(data);
-		}
-	});
+	data.save()
+		.then((result) => res.json(result))
+		.catch((err) => console.log(err));
 });
 
-// app.put("/api/updateStatus/:id", (req, res) => {
-// 	var id = req.params.id;
-// 	var status = req.params.noteStatus;
-// 	console.log(id, status);
-// 	Post.updateOne({ _id: id }, { noteStatus: status })
-// 		.then((result) => res.json(result))
-// 		.catch((err) => console.log(err));
-// });
+app.put("/api/updateStatus/:id", (req, res) => {
+	var id = req.params.id;
+	var status = req.body.noteStatus;
+	Post.updateOne({ _id: id }, { noteStatus: status })
+		.then((result) => res.json(result))
+		.catch((err) => console.log(err));
+});
 
 app.delete("/api/del/:id", (req, res) => {
 	var id = req.params.id;

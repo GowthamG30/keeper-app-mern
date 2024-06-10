@@ -56,7 +56,7 @@ footer p {
   word-wrap: break-word;
 }
 
-.note button {
+.del {
   position: relative;
   float: right;
   margin-right: 10px;

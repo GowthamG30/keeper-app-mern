@@ -37,25 +37,25 @@ const App = () => {
 			.catch((err) => console.error(err));
 	};
 
-	// const updateState = (id, status) => {
-	// 	const params = JSON.stringify({
-	// 		noteStatus: status,
-	// 	});
+	const updateState = (id, status) => {
+		const params = JSON.stringify({
+			noteStatus: status,
+		});
 
-	// 	axios
-	// 		.put("/api/updateStatus/" + id, params, {
-	// 			headers: {
-	// 				"content-type": "application/json",
-	// 			},
-	// 		})
-	// 		.then((res) => console.log(res))
-	// 		.catch((err) => console.error(err));
-
-	// 	axios
-	// 		.get("/api/all")
-	// 		.then((res) => setTasks(res.data))
-	// 		.catch((err) => console.error(err));
-	// }
+		axios
+			.put("/api/updateStatus/" + id, params, {
+				headers: {
+					"content-type": "application/json",
+				},
+			})
+			.then((stateRes) => {
+				axios
+					.get("/api/all")
+					.then((allRes) => setTasks(allRes.data))
+					.catch((err) => console.error(err));
+			})
+			.catch((err) => console.error(err));
+	};
 
 	const deleteNode = (id) => {
 		axios
@@ -82,7 +82,7 @@ const App = () => {
 						content={task.content}
 						noteStatus={task.noteStatus}
 						onDelete={deleteNode}
-						// onSelect={updateState}
+						onSelect={updateState}
 					/>
 				);
 			})}
