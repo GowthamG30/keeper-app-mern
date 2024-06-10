@@ -13,12 +13,13 @@ const App = () => {
 			.get("/api/all")
 			.then((res) => setTasks(res.data))
 			.catch((err) => console.error(err));
-	}, [Tasks]);
+	}, []);
 
 	const addNote = (newNote) => {
 		const params = JSON.stringify({
 			title: newNote.title,
 			content: newNote.content,
+			noteStatus: "To Do",
 		});
 
 		axios
@@ -27,24 +28,44 @@ const App = () => {
 					"content-type": "application/json",
 				},
 			})
-			.then((res) => console.log(res))
-			.catch((err) => console.error(err));
-
-		axios
-			.get("/api/all")
-			.then((res) => setTasks(res.data))
+			.then((addRes) => {
+				axios
+					.get("/api/all")
+					.then((allRes) => setTasks(allRes.data))
+					.catch((err) => console.error(err));
+			})
 			.catch((err) => console.error(err));
 	};
+
+	// const updateState = (id, status) => {
+	// 	const params = JSON.stringify({
+	// 		noteStatus: status,
+	// 	});
+
+	// 	axios
+	// 		.put("/api/updateStatus/" + id, params, {
+	// 			headers: {
+	// 				"content-type": "application/json",
+	// 			},
+	// 		})
+	// 		.then((res) => console.log(res))
+	// 		.catch((err) => console.error(err));
+
+	// 	axios
+	// 		.get("/api/all")
+	// 		.then((res) => setTasks(res.data))
+	// 		.catch((err) => console.error(err));
+	// }
 
 	const deleteNode = (id) => {
 		axios
 			.delete("/api/del/" + id)
-			.then((res) => console.log(res))
-			.catch((err) => console.error(err));
-
-		axios
-			.get("/api/all")
-			.then((res) => setTasks(res.data))
+			.then((delRes) => {
+				axios
+					.get("/api/all")
+					.then((allRes) => setTasks(allRes.data))
+					.catch((err) => console.error(err));
+			})
 			.catch((err) => console.error(err));
 	};
 
@@ -59,7 +80,9 @@ const App = () => {
 						id={task._id}
 						title={task.title}
 						content={task.content}
+						noteStatus={task.noteStatus}
 						onDelete={deleteNode}
+						// onSelect={updateState}
 					/>
 				);
 			})}
