@@ -3,7 +3,7 @@ const cors = require("cors");
 const express = require("express");
 const { Post } = require("./database.js");
 require("dotenv").config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 const path = require("path");
 
 const app = express();
@@ -22,9 +22,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/all", (req, res)=>{
-  Post.find({},(err, foundPosts)=>{
-    res.json(foundPosts);
-  });
+  Post.find({})
+  	.then(foundPosts => res.json(foundPosts))
+	.catch(err => console.log(err));
 });
 
 app.post("/api/add", (req, res) => {
@@ -38,12 +38,9 @@ app.post("/api/add", (req, res) => {
 
 app.delete("/api/del/:id",(req,res)=>{
   var id = req.params.id
-  Post.deleteOne({ _id: id},(err, result) => {
-    if(err){
-      throw err;
-    }
-    res.json(result);
-  });
+  Post.deleteOne({ _id: id})
+  	.then(result => res.json(result))
+	.catch(err => console.log(err));
 });
 
 app.listen(port, function() {

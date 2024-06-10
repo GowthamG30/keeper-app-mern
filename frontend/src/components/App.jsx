@@ -15,9 +15,9 @@ function App() {
     .get("/api/all")
     .then(res => setTasks(res.data))
     .catch(err => console.error(err));
-  });
+  }, []);
   
-  console.log(Tasks);
+//   console.log(Tasks);
   function addNote(newNote) {
     const params = JSON.stringify({
       "title": newNote.title,
