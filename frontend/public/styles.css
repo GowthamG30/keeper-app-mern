@@ -101,3 +101,12 @@ form button {
   cursor: pointer;
   outline: none;
 }
+
+.alert {
+  text-align: center;
+}
+
+.empty-alert {
+  background: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+}
