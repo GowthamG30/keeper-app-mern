@@ -5,70 +5,67 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 import axios from "axios";
 
+const App = () => {
+	const [Tasks, setTasks] = useState([]);
 
-function App() {
+	useEffect(() => {
+		axios
+			.get("/api/all")
+			.then((res) => setTasks(res.data))
+			.catch((err) => console.error(err));
+	}, []);
 
-  const [Tasks, setTasks] = useState([]);
+	const addNote = (newNote) => {
+		const params = JSON.stringify({
+			title: newNote.title,
+			content: newNote.content,
+		});
 
-  useEffect(()=>{
-    axios
-    .get("/api/all")
-    .then(res => setTasks(res.data))
-    .catch(err => console.error(err));
-  }, []);
-  
-//   console.log(Tasks);
-  function addNote(newNote) {
-    const params = JSON.stringify({
-      "title": newNote.title,
-      "content": newNote.content
-    });
+		axios
+			.post("/api/add", params, {
+				headers: {
+					"content-type": "application/json",
+				},
+			})
+			.then((res) => console.log(res))
+			.catch((err) => console.error(err));
 
-    axios
-      .post("/api/add",params,{
-        "headers": {
-        "content-type": "application/json",
-        },})
-      .then(res => console.log(res))
-      .catch(err => console.error(err));
+		axios
+			.get("/api/all")
+			.then((res) => setTasks(res.data))
+			.catch((err) => console.error(err));
+	};
 
-    axios
-      .get("/api/all")
-      .then(res => setTasks(res.data))
-      .catch(err => console.error(err));
-  }
+	const deleteNode = (id) => {
+		axios
+			.delete("/api/del/" + id)
+			.then((res) => console.log(res))
+			.catch((err) => console.error(err));
 
-  function deleteNode(id) {
+		axios
+			.get("/api/all")
+			.then((res) => setTasks(res.data))
+			.catch((err) => console.error(err));
+	};
 
-    axios
-      .delete("/api/del/"+id)
-      .then(res => console.log(res))
-      .catch(err => console.error(err));
-
-    axios
-      .get("/api/all")
-      .then(res => setTasks(res.data))
-      .catch(err => console.error(err));
-  }
-
-  return (
-    <div>
-      <Header />
-      <CreateArea
-        onAdd={addNote}
-      />
-      {Tasks.map((task) => {
-        return <Note
-          key={task._id}
-          id={task._id}
-          title={task.title}
-          content={task.content} 
-          onDelete={deleteNode}
-        />;
-      })}
-      <Footer />
-    </div>
-  );
-}
+	return (
+		<div>
+			<Header />
+			<CreateArea onAdd={addNote} />
+			{Tasks.map((task) => {
+				return (
+					<Note
+						key={task._id}
+						id={task._id}
+						title={task.title}
+						content={task.content}
+						onDelete={deleteNode}
+					/>
+				);
+			})}
+			<Footer />
+		</div>
+	);
+};
 
 export default App;
