@@ -13,7 +13,7 @@ const App = () => {
 			.get("/api/all")
 			.then((res) => setTasks(res.data))
 			.catch((err) => console.error(err));
-	}, []);
+	}, [Tasks]);
 
 	const addNote = (newNote) => {
 		const params = JSON.stringify({
