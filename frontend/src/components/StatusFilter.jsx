@@ -1,18 +1,30 @@
 import React from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const StatusFilter = ({ statusFilter, onSelect }) => {
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
 	return (
-		<DropdownButton
-			id="dropdown-basic-button"
-			title={statusFilter}
-			onSelect={(eventKey) => onSelect(eventKey)}
+		<FormControl
+			variant="outlined"
+			style={{ minWidth: isMobile ? "100%" : "200px" }}
 		>
-			<Dropdown.Item eventKey="All">All</Dropdown.Item>
-			<Dropdown.Item eventKey="To Do">To Do</Dropdown.Item>
-			<Dropdown.Item eventKey="In Progress">In Progress</Dropdown.Item>
-			<Dropdown.Item eventKey="Done">Done</Dropdown.Item>
-		</DropdownButton>
+			<Select
+				value={statusFilter}
+				onChange={(event) => onSelect(event.target.value)}
+				displayEmpty
+			>
+				<MenuItem value="All">All</MenuItem>
+				<MenuItem value="To Do">To Do</MenuItem>
+				<MenuItem value="In Progress">In Progress</MenuItem>
+				<MenuItem value="Done">Done</MenuItem>
+			</Select>
+		</FormControl>
 	);
 };
 
