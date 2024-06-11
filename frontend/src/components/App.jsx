@@ -61,7 +61,28 @@ const App = () => {
 			.catch((err) => console.error(err));
 	};
 
-	const deleteNode = (id) => {
+	const updateNote = (id, updatedNote) => {
+		const params = JSON.stringify({
+			title: updatedNote.title,
+			content: updatedNote.content,
+		});
+
+		axios
+			.put("/api/update/" + id, params, {
+				headers: {
+					"content-type": "application/json",
+				},
+			})
+			.then((updateRes) => {
+				axios
+					.get("/api/all")
+					.then((allRes) => setTasks(allRes.data))
+					.catch((err) => console.error(err));
+			})
+			.catch((err) => console.error(err));
+	};
+
+	const deleteNote = (id) => {
 		axios
 			.delete("/api/del/" + id)
 			.then((delRes) => {
@@ -82,7 +103,13 @@ const App = () => {
 			<Header />
 			<CreateArea onAdd={addNote} />
 			<StatusFilter statusFilter={statusFilter} onSelect={handleStatusFilter} />
-			<NoteList statusFilter={statusFilter} Tasks={Tasks} onDelete={deleteNode} onSelect={updateState} />
+			<NoteList
+				statusFilter={statusFilter}
+				Tasks={Tasks}
+				onDelete={deleteNote}
+				onSelect={updateState}
+				onUpdate={updateNote}
+			/>
 			<Footer />
 		</div>
 	);

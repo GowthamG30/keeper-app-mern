@@ -48,6 +48,15 @@ app.put("/api/updateStatus/:id", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+app.put("/api/update/:id", (req, res) => {
+	var id = req.params.id;
+	var title = req.body.title;
+	var content = req.body.content;
+	Post.updateOne({ _id: id }, { title: title, content: content })
+		.then((result) => res.json(result))
+		.catch((err) => console.log(err));
+});
+
 app.delete("/api/del/:id", (req, res) => {
 	var id = req.params.id;
 	Post.deleteOne({ _id: id })

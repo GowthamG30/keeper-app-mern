@@ -1,7 +1,7 @@
 import React from "react";
 import Note from "./Note";
 
-const NoteList = ({ Tasks, statusFilter, onDelete, onSelect }) => {
+const NoteList = ({ Tasks, statusFilter, onDelete, onSelect, onUpdate }) => {
 	return (
 		<div>
 			{Tasks.filter((task) => (statusFilter === "All" || task.noteStatus === statusFilter)).map((task) => {
@@ -14,6 +14,7 @@ const NoteList = ({ Tasks, statusFilter, onDelete, onSelect }) => {
 						noteStatus={task.noteStatus}
 						onDelete={onDelete}
 						onSelect={onSelect}
+						onUpdate={onUpdate}
 					/>
 				);
 			})}
