@@ -4,6 +4,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
+import StatusFilter from "./StatusFilter";
+import NoteList from "./NoteList";
 import axios from "axios";
 
 const App = () => {
@@ -71,33 +73,16 @@ const App = () => {
 			.catch((err) => console.error(err));
 	};
 
+	const handleStatusFilter = (eventKey) => {
+		setStatusFilter(eventKey);
+	};
+
 	return (
 		<div>
 			<Header />
 			<CreateArea onAdd={addNote} />
-			<DropdownButton
-				id="dropdown-basic-button"
-				title={statusFilter}
-				onSelect={(eventKey) => setStatusFilter(eventKey)}
-			>
-				<Dropdown.Item eventKey="All">All</Dropdown.Item>
-				<Dropdown.Item eventKey="To Do">To Do</Dropdown.Item>
-				<Dropdown.Item eventKey="In Progress">In Progress</Dropdown.Item>
-				<Dropdown.Item eventKey="Done">Done</Dropdown.Item>
-			</DropdownButton>
-			{Tasks.filter((task) => (statusFilter === "All" || task.noteStatus === statusFilter)).map((task) => {
-				return (
-					<Note
-						key={task._id}
-						id={task._id}
-						title={task.title}
-						content={task.content}
-						noteStatus={task.noteStatus}
-						onDelete={deleteNode}
-						onSelect={updateState}
-					/>
-				);
-			})}
+			<StatusFilter statusFilter={statusFilter} onSelect={handleStatusFilter} />
+			<NoteList statusFilter={statusFilter} Tasks={Tasks} onDelete={deleteNode} onSelect={updateState} />
 			<Footer />
 		</div>
 	);

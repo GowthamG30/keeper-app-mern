@@ -1,9 +1,13 @@
-import e from "cors";
 import React, { useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import MuiButton from '@mui/material/Button';
 
 const Note = (props) => {
-	const handleClick = () => {
+	// const handleEdit = () => {
+	// 	props.onEdit(props.id);
+	// };
+
+	const handleDelete = () => {
 		props.onDelete(props.id);
 	};
 
@@ -25,9 +29,11 @@ const Note = (props) => {
 					<Dropdown.Item eventKey="In Progress">In Progress</Dropdown.Item>
 					<Dropdown.Item eventKey="Done">Done</Dropdown.Item>
 				</DropdownButton>
-				<button className="del" onClick={handleClick}>
+				{/* <MuiButton variant="contained" onClick={handleEdit}>Edit</MuiButton> */}
+				<MuiButton variant="contained" onClick={handleDelete}>Delete</MuiButton>
+				{/* <button className="del" onClick={handleDelete}>
 					DELETE
-				</button>
+				</button> */}
 			</div>
 		</div>
 	);
