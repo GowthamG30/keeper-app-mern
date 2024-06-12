@@ -1,12 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
 import Header from "./Header";
 import Footer from "./Footer";
-import Note from "./Note";
 import CreateArea from "./CreateArea";
 import StatusFilter from "./StatusFilter";
 import NoteList from "./NoteList";
 import axios from "axios";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#202124",
+		},
+		secondary: {
+			main: "rgb(95, 99, 104)",
+		},
+		background: {
+			default: "#202124",
+			paper: "#202124",
+		},
+		text: {
+			primary: "#e8eaed",
+			secondary: "rgb(95, 99, 104)",
+		},
+	},
+	components: {
+		MuiPaper: {
+			styleOverrides: {
+				root: {
+					border: "1px solid rgb(95, 99, 104)",
+					borderRadius: "10px",
+				},
+			},
+		},
+	},
+});
 
 const App = () => {
 	const [Tasks, setTasks] = useState([]);
@@ -99,19 +127,24 @@ const App = () => {
 	};
 
 	return (
-		<div>
-			<Header />
-			<CreateArea onAdd={addNote} />
-			<StatusFilter statusFilter={statusFilter} onSelect={handleStatusFilter} />
-			<NoteList
-				statusFilter={statusFilter}
-				Tasks={Tasks}
-				onDelete={deleteNote}
-				onSelect={updateState}
-				onUpdate={updateNote}
-			/>
-			<Footer />
-		</div>
+		<>
+			<ThemeProvider theme={theme}>
+				<Header />
+				<CreateArea onAdd={addNote} />
+				<StatusFilter
+					statusFilter={statusFilter}
+					onSelect={handleStatusFilter}
+				/>
+				<NoteList
+					statusFilter={statusFilter}
+					Tasks={Tasks}
+					onDelete={deleteNote}
+					onSelect={updateState}
+					onUpdate={updateNote}
+				/>
+				<Footer />
+			</ThemeProvider>
+		</>
 	);
 };
 

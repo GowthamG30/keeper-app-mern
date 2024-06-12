@@ -3,8 +3,12 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
 import AddIcon from "@mui/icons-material/Add";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 
 const CreateArea = (props) => {
+	const theme = useTheme();
+
 	const [emptyTitle, setEmptyTitle] = useState(false);
 	const [note, setNote] = useState({
 		title: "",
@@ -37,46 +41,53 @@ const CreateArea = (props) => {
 	};
 
 	return (
-		<div>
-			<form onSubmit={submitNote}>
-				<TextField
-					label="Title"
-					name="title"
-					variant="outlined"
-					value={note.title}
-					onChange={handleChange}
-					fullWidth
-					margin="normal"
-				/>
-				<TextField
-					label="Content"
-					name="content"
-					variant="outlined"
-					value={note.content}
-					onChange={handleChange}
-					fullWidth
-					multiline
-					rows={4}
-					margin="normal"
-				/>
-				{emptyTitle && (
-					<Alert
-						severity="warning"
-						style={{
-							position: "absolute",
-							top: "-50px",
-							left: "0",
-							right: "0",
-						}}
-					>
-						Please enter a title for the note.
-					</Alert>
-				)}
-				<IconButton type="submit" color="primary">
+		<Box
+			component="form"
+			onSubmit={submitNote}
+			width="30%"
+			mx="auto"
+			marginTop="75px"
+			display="flex"
+			flexDirection="column"
+			border="1px solid rgb(95, 99, 104)"
+			borderRadius={theme.shape.borderRadius}
+			padding={theme.spacing(2)}
+		>
+			<TextField
+				label="Title"
+				name="title"
+				variant="standard"
+				value={note.title}
+				onChange={handleChange}
+				fullWidth
+				margin="normal"
+			/>
+			<TextField
+				label="Content"
+				name="content"
+				variant="standard"
+				value={note.content}
+				onChange={handleChange}
+				fullWidth
+				multiline
+				rows={4}
+				margin="normal"
+			/>
+			{emptyTitle && (
+				<Alert severity="warning">Please enter a title for the note.</Alert>
+			)}
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "flex-end",
+					marginTop: theme.spacing(2),
+				}}
+			>
+				<IconButton type="submit" color="secondary">
 					<AddIcon />
 				</IconButton>
-			</form>
-		</div>
+			</Box>
+		</Box>
 	);
 };
 

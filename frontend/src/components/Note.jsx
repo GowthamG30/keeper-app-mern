@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
-import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -12,8 +10,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 
 const Note = (props) => {
+	const theme = useTheme();
+
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedNote, setEditedNote] = useState({
 		title: props.title,
@@ -60,7 +62,7 @@ const Note = (props) => {
 					<TextField
 						label="Title"
 						name="title"
-						variant="outlined"
+						variant="standard"
 						value={editedNote.title}
 						onChange={handleEditedNote}
 						fullWidth
@@ -69,42 +71,61 @@ const Note = (props) => {
 					<TextField
 						label="Content"
 						name="content"
-						variant="outlined"
+						variant="standard"
 						value={editedNote.content}
 						onChange={handleEditedNote}
 						fullWidth
 						multiline
-						rows={4}
+						rows={props.content.length > 100 ? 8 : 4}
 						margin="normal"
 					/>
-					<div>
+					<Box display="flex" alignItems="center">
 						<IconButton
 							onClick={handleSave}
 							variant="contained"
-							color="primary"
+							color="secondary"
 							style={{ marginRight: "8px" }}
 						>
 							<SaveIcon />
 						</IconButton>
 						<IconButton
 							onClick={handleCancel}
-							variant="outlined"
+							variant="contained"
 							color="secondary"
 						>
 							<CancelIcon />
 						</IconButton>
-					</div>
+					</Box>
 				</>
 			) : (
 				<>
 					<Typography variant="h5" gutterBottom>
 						{props.title}
 					</Typography>
-					<Typography variant="body1" paragraph>
+					<Typography
+						variant="body1"
+						paragraph
+						sx={{
+							whiteSpace: "pre-wrap",
+							textAlign: "left",
+						}}
+					>
 						{props.content}
 					</Typography>
-					<div>
-						<FormControl variant="outlined">
+					<Box display="flex" alignItems="center">
+						<Box display="flex" marginRight="auto">
+							<IconButton
+								onClick={handleEdit}
+								style={{ marginRight: "8px" }}
+								color="secondary"
+							>
+								<EditIcon />
+							</IconButton>
+							<IconButton onClick={handleDelete} color="secondary">
+								<DeleteIcon />
+							</IconButton>
+						</Box>
+						<FormControl variant="outlined" color="secondary">
 							<Select
 								value={props.noteStatus}
 								onChange={(event) => handleSelect(event.target.value)}
@@ -115,13 +136,7 @@ const Note = (props) => {
 								<MenuItem value="Done">Done</MenuItem>
 							</Select>
 						</FormControl>
-						<IconButton onClick={handleEdit} style={{ marginRight: "8px" }}>
-							<EditIcon />
-						</IconButton>
-						<IconButton onClick={handleDelete}>
-							<DeleteIcon />
-						</IconButton>
-					</div>
+					</Box>
 				</>
 			)}
 		</Paper>

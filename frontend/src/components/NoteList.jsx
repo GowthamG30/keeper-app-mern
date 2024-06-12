@@ -1,13 +1,27 @@
 import React from "react";
 import Note from "./Note";
+import Masonry from "react-masonry-css";
 
 const NoteList = ({ Tasks, statusFilter, onDelete, onSelect, onUpdate }) => {
+	const breakpointColumnsObj = {
+		default: 4,
+		1100: 3,
+		700: 2,
+		500: 1,
+	};
+
 	return (
-		<div>
-			{Tasks.filter((task) => (statusFilter === "All" || task.noteStatus === statusFilter)).map((task) => {
-				return (
+		<Masonry
+			breakpointCols={breakpointColumnsObj}
+			className="my-masonry-grid"
+			columnClassName="my-masonry-grid_column"
+			style={{ display: "flex", justifyContent: "center" }}
+		>
+			{Tasks.filter(
+				(task) => statusFilter === "All" || task.noteStatus === statusFilter
+			).map((task) => (
+				<div key={task._id} style={{ width: "100%", padding: "8px" }}>
 					<Note
-						key={task._id}
 						id={task._id}
 						title={task.title}
 						content={task.content}
@@ -16,9 +30,9 @@ const NoteList = ({ Tasks, statusFilter, onDelete, onSelect, onUpdate }) => {
 						onSelect={onSelect}
 						onUpdate={onUpdate}
 					/>
-				);
-			})}
-		</div>
+				</div>
+			))}
+		</Masonry>
 	);
 };
 
