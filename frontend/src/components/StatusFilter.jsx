@@ -4,24 +4,27 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { useMediaQuery } from "@mui/material";
 
 const StatusFilter = ({ statusFilter, onSelect }) => {
 	const theme = useTheme();
-	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+	const isScreenSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
 	return (
 		<Box
 			mb={2}
 			mt={2}
-			ml={isMobile ? 0 : "auto"}
-			mr={isMobile ? 0 : 2}
+			ml={isScreenSmall ? "1%" : "auto"}
+			mr={isScreenSmall ? "1%" : "5%"}
 			display="flex"
-			justifyContent="flex-end"
+			justifyContent={isScreenSmall ? "center" : "flex-end"}
 		>
 			<FormControl
 				variant="outlined"
-				style={{ minWidth: isMobile ? "100%" : "200px" }}
+				style={{
+					minWidth: isScreenSmall ? "75%" : "200px",
+					maxWidth: isScreenSmall ? "75%" : "200px",
+				}}
 			>
 				<Select
 					value={statusFilter}
@@ -36,7 +39,6 @@ const StatusFilter = ({ statusFilter, onSelect }) => {
 							vertical: "top",
 							horizontal: "right",
 						},
-						getContentAnchorEl: null,
 						PaperProps: {
 							style: {
 								backgroundColor: theme.palette.background.paper,

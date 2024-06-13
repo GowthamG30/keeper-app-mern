@@ -99,7 +99,15 @@ const Note = (props) => {
 				</>
 			) : (
 				<>
-					<Typography variant="h5" gutterBottom>
+					<Typography
+						variant="h5"
+						gutterBottom
+						color={
+							props.noteStatus === "Done"
+								? theme.palette.text.secondary
+								: theme.palette.text.primary
+						}
+					>
 						{props.title}
 					</Typography>
 					<Typography
@@ -109,6 +117,11 @@ const Note = (props) => {
 							whiteSpace: "pre-wrap",
 							textAlign: "left",
 						}}
+						color={
+							props.noteStatus === "Done"
+								? theme.palette.text.secondary
+								: theme.palette.text.primary
+						}
 					>
 						{props.content}
 					</Typography>
