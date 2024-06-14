@@ -7,12 +7,16 @@ const connectDB = require("./src/database.js");
 const path = require("path");
 
 const app = express();
+
+// middleware
 app.use(cors());
 app.use(
 	express.json({
 		extended: false,
 	})
 );
+
+// routes
 const postRoutes = require("./src/route/postRoutes");
 app.use("/api", postRoutes);
 
@@ -33,3 +37,5 @@ connectDB()
 		console.error("Error connecting to MongoDB:", err.message);
 		process.exit(1);
 	});
+
+module.exports = app;

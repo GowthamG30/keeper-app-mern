@@ -1,3 +1,6 @@
+const config = require("../../config/config");
+const nodeEnv = config.NODE_ENV;
+
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
@@ -6,7 +9,10 @@ const postSchema = new mongoose.Schema({
 	noteStatus: String,
 });
 
-const Post = mongoose.model("Post", postSchema);
+const Post = mongoose.model(
+	nodeEnv === "test" ? "TestPost" : "Post",
+	postSchema
+);
 
 module.exports = {
 	Post: Post,
