@@ -5,10 +5,7 @@ const mongoURI = config.MONGO_URI;
 const connectDB = () => {
 	return new Promise((resolve, reject) => {
 		mongoose
-			.connect(mongoURI, {
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
-			})
+			.connect(mongoURI)
 			.then(() => {
 				console.log("MongoDB connected successfully");
 				resolve();
