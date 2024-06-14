@@ -12,15 +12,16 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
 
 const Note = (props) => {
 	const theme = useTheme();
-
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedNote, setEditedNote] = useState({
 		title: props.title,
 		content: props.content,
 	});
+	const [visible, setVisible] = useState(true);
 
 	const handleEditedNote = (e) => {
 		const { name, value } = e.target;
@@ -48,7 +49,10 @@ const Note = (props) => {
 	};
 
 	const handleDelete = () => {
-		props.onDelete(props.id);
+		setVisible(false);
+		setTimeout(() => {
+			props.onDelete(props.id);
+		}, 300);
 	};
 
 	const handleSelect = (eventKey) => {
@@ -56,103 +60,119 @@ const Note = (props) => {
 	};
 
 	return (
-		<Paper elevation={3} style={{ padding: "20px", marginBottom: "20px" }}>
-			{isEditing ? (
-				<>
-					<TextField
-						label="Title"
-						name="title"
-						variant="standard"
-						value={editedNote.title}
-						onChange={handleEditedNote}
-						fullWidth
-						margin="normal"
-					/>
-					<TextField
-						label="Content"
-						name="content"
-						variant="standard"
-						value={editedNote.content}
-						onChange={handleEditedNote}
-						fullWidth
-						multiline
-						rows={props.content.length > 100 ? 8 : 4}
-						margin="normal"
-					/>
-					<Box display="flex" alignItems="center">
-						<IconButton
-							onClick={handleSave}
-							variant="contained"
-							color="secondary"
-							style={{ marginRight: "8px" }}
-						>
-							<SaveIcon />
-						</IconButton>
-						<IconButton
-							onClick={handleCancel}
-							variant="contained"
-							color="secondary"
-						>
-							<CancelIcon />
-						</IconButton>
-					</Box>
-				</>
-			) : (
-				<>
-					<Typography
-						variant="h5"
-						gutterBottom
-						color={
-							props.noteStatus === "Done"
-								? theme.palette.text.secondary
-								: theme.palette.text.primary
-						}
-					>
-						{props.title}
-					</Typography>
-					<Typography
-						variant="body1"
-						paragraph
-						sx={{
-							whiteSpace: "pre-wrap",
-							textAlign: "left",
-						}}
-						color={
-							props.noteStatus === "Done"
-								? theme.palette.text.secondary
-								: theme.palette.text.primary
-						}
-					>
-						{props.content}
-					</Typography>
-					<Box display="flex" alignItems="center">
-						<Box display="flex" marginRight="auto">
+		<Fade in={visible} timeout={300}>
+			<Paper elevation={3} style={{ padding: "20px", marginBottom: "20px" }}>
+				{isEditing ? (
+					<>
+						<TextField
+							label="Title"
+							name="title"
+							variant="standard"
+							value={editedNote.title}
+							onChange={handleEditedNote}
+							fullWidth
+							margin="normal"
+						/>
+						<TextField
+							label="Content"
+							name="content"
+							variant="standard"
+							value={editedNote.content}
+							onChange={handleEditedNote}
+							fullWidth
+							multiline
+							rows={props.content.length > 100 ? 8 : 4}
+							margin="normal"
+						/>
+						<Box display="flex" alignItems="center">
 							<IconButton
-								onClick={handleEdit}
+								onClick={handleSave}
+								variant="contained"
+								color="secondary"
 								style={{ marginRight: "8px" }}
+							>
+								<SaveIcon />
+							</IconButton>
+							<IconButton
+								onClick={handleCancel}
+								variant="contained"
 								color="secondary"
 							>
-								<EditIcon />
-							</IconButton>
-							<IconButton onClick={handleDelete} color="secondary">
-								<DeleteIcon />
+								<CancelIcon />
 							</IconButton>
 						</Box>
-						<FormControl variant="outlined" color="secondary">
-							<Select
-								value={props.noteStatus}
-								onChange={(event) => handleSelect(event.target.value)}
-								displayEmpty
-							>
-								<MenuItem value="To Do">To Do</MenuItem>
-								<MenuItem value="In Progress">In Progress</MenuItem>
-								<MenuItem value="Done">Done</MenuItem>
-							</Select>
-						</FormControl>
-					</Box>
-				</>
-			)}
-		</Paper>
+					</>
+				) : (
+					<>
+						<Typography
+							variant="h5"
+							gutterBottom
+							color={
+								props.noteStatus === "Done"
+									? theme.palette.text.secondary
+									: theme.palette.text.primary
+							}
+						>
+							{props.title}
+						</Typography>
+						<Typography
+							variant="body1"
+							paragraph
+							sx={{
+								whiteSpace: "pre-wrap",
+								textAlign: "left",
+							}}
+							color={
+								props.noteStatus === "Done"
+									? theme.palette.text.secondary
+									: theme.palette.text.primary
+							}
+						>
+							{props.content}
+						</Typography>
+						<Box display="flex" alignItems="center">
+							<Box display="flex" marginRight="auto">
+								<IconButton
+									onClick={handleEdit}
+									style={{ marginRight: "8px" }}
+									color="secondary"
+								>
+									<EditIcon />
+								</IconButton>
+								<IconButton onClick={handleDelete} color="secondary">
+									<DeleteIcon />
+								</IconButton>
+							</Box>
+							<FormControl variant="outlined" color="secondary">
+								<Select
+									value={props.noteStatus}
+									onChange={(event) => handleSelect(event.target.value)}
+									displayEmpty
+									sx={{
+										color:
+											props.noteStatus === "Done"
+												? theme.palette.text.secondary
+												: theme.palette.text.primary,
+									}}
+									inputProps={{
+										sx: {
+											color:
+												props.noteStatus === "Done"
+													? theme.palette.text.secondary
+													: theme.palette.text.primary,
+										},
+									}}
+								>
+									<MenuItem value="To Do">To Do</MenuItem>
+									<MenuItem value="In Progress">In Progress</MenuItem>
+									<MenuItem value="Done">Done</MenuItem>
+								</Select>
+							</FormControl>
+						</Box>
+					</>
+				)}
+			</Paper>
+		</Fade>
 	);
 };
 

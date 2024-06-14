@@ -38,19 +38,9 @@ app.post("/api/add", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
-app.put("/api/updateStatus/:id", (req, res) => {
-	var id = req.params.id;
-	var status = req.body.noteStatus;
-	Post.updateOne({ _id: id }, { noteStatus: status })
-		.then((result) => res.json(result))
-		.catch((err) => console.log(err));
-});
-
 app.put("/api/update/:id", (req, res) => {
 	var id = req.params.id;
-	var title = req.body.title;
-	var content = req.body.content;
-	Post.updateOne({ _id: id }, { title: title, content: content })
+	Post.updateOne({ _id: id }, req.body)
 		.then((result) => res.json(result))
 		.catch((err) => console.log(err));
 });

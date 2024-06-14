@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CreateArea from "./CreateArea";
-import StatusFilter from "./StatusFilter";
 import NoteList from "./NoteList";
 import axios from "axios";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -38,7 +37,6 @@ const theme = createTheme({
 
 const App = () => {
 	const [Tasks, setTasks] = useState([]);
-	const [statusFilter, setStatusFilter] = useState("All");
 
 	useEffect(() => {
 		axios
@@ -75,7 +73,7 @@ const App = () => {
 		});
 
 		axios
-			.put("/api/updateStatus/" + id, params, {
+			.put("/api/update/" + id, params, {
 				headers: {
 					"content-type": "application/json",
 				},
@@ -122,21 +120,12 @@ const App = () => {
 			.catch((err) => console.error(err));
 	};
 
-	const handleStatusFilter = (eventKey) => {
-		setStatusFilter(eventKey);
-	};
-
 	return (
 		<>
 			<ThemeProvider theme={theme}>
 				<Header />
 				<CreateArea onAdd={addNote} />
-				<StatusFilter
-					statusFilter={statusFilter}
-					onSelect={handleStatusFilter}
-				/>
 				<NoteList
-					statusFilter={statusFilter}
 					Tasks={Tasks}
 					onDelete={deleteNote}
 					onSelect={updateState}
