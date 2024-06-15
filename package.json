@@ -1,7 +1,7 @@
 {
-  "name": "keeper-app",
+  "name": "notate-app",
   "version": "1.0.0",
-  "description": "Keep application.",
+  "description": "Note taking application.",
   "main": "server.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GowthamG30/keeper-app-mern.git"
+    "url": "git+https://github.com/GowthamG30/notate-app.git"
   },
   "author": "Gowtham Gorrepati",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GowthamG30/keeper-app-mern/issues"
+    "url": "https://github.com/GowthamG30/notate-app/issues"
   },
-  "homepage": "https://github.com/GowthamG30/keeper-app-mern#readme",
+  "homepage": "https://github.com/GowthamG30/notate-app#readme",
   "dependencies": {
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
