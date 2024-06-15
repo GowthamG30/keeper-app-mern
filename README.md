@@ -33,8 +33,8 @@ You have two options for setting up MongoDB:
 ##### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/GowthamG30/keeper-app-mern.git
-cd keeper-app-mern
+git clone https://github.com/GowthamG30/notate-app.git
+cd notate-app
 ```
 
 ##### Step 2: Install Dependencies
