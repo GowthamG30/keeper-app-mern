@@ -1,6 +1,6 @@
 ## Notate
 
-Note making application. This application is built using React for the frontend and Node.js for the backend, with MongoDB Atlas serving as the database. Below are the setup instructions for running the project locally on your machine.
+Note taking application. This application is built using React for the frontend and Node.js for the backend, with MongoDB Atlas serving as the database. Below are the setup instructions for running the project locally on your machine.
 
 ---
 
